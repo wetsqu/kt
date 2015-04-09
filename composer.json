@@ -3,7 +3,8 @@
     "type": "library",
     "description": "KT - Laravel",
     "keywords": ["KT", "laravel"],    
-    "license": "MIT",		
+    "license": "MIT",
+	"minimum-stability": "dev",
     "require": {
         "php": ">=5.3.0"
     },
