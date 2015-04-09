@@ -1,6 +1,7 @@
 {
     "name": "wetsqu/laravel",
     "type": "library",
+    "version": "1.0.0",
     "description": "KT - Laravel",
     "keywords": ["KT", "laravel"],    
     "license": "MIT",
