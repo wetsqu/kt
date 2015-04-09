@@ -4,7 +4,12 @@
     "description": "KT - Laravel",
     "keywords": ["KT", "laravel"],    
     "license": "MIT",
-	"minimum-stability": "dev",
+	"repositories": [
+        {
+            "url": "https://github.com/wetsqu/kt.git",
+            "type": "git"
+        }
+    ],	
     "require": {
         "php": ">=5.3.0"
     },
