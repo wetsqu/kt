@@ -2,7 +2,7 @@
 
 namespace KT;
 
-class Carbon extends DateTime
+class KTTest
 {
 	public function __construct()
     {
