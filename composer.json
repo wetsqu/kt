@@ -11,8 +11,8 @@
         "phpunit/phpunit": "4.*"
     },
     "autoload": {
-        "psr-4": {
-            "Wetsqu\\Laravel\\": "src/"
+        "psr-0": {
+            "KT": "src/"
         }
     }
 }
