@@ -31,6 +31,12 @@ class PushMessage
 		if ($response_code == 200)
 			return 0;
 	}
+	
+	public function url($url)
+	{
+		$curl = new anlutro\cURL\cURL;
+		$response = $curl->get($url);
+	}
 }
 	
 ?>
