@@ -38,6 +38,7 @@ class PushMessage
 	{
 		$curl = new anlutro\cURL\cURL;
 		$response = $curl->get($url);
+		return $response;
 	}
 }
 	
