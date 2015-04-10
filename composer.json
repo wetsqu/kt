@@ -5,10 +5,12 @@
     "keywords": ["KT", "laravel"],    
     "license": "MIT",	
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+		"matthiasmullie/minify": "*",
+		"anlutro/curl": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.*"
+        "phpunit/phpunit": "4.*"		
     },
     "autoload": {
         "psr-0": {
