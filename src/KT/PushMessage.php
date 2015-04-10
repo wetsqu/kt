@@ -2,6 +2,8 @@
 
 namespace KT;
 
+use anlutro;
+
 class PushMessage
 {
 	private $host = '';
