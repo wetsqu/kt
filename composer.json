@@ -14,5 +14,6 @@
         "psr-4": {
             "KT\\": "src/"
         }
-    }
+    },
+	"minimum-stability": "dev"
 }
