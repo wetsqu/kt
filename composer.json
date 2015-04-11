@@ -11,8 +11,8 @@
 		"anlutro/curl": "0.*"
     },    
     "autoload": {
-        "psr-0": {
-            "KT": "src/"
+        "psr-4": {
+            "KT\\": "src/"
         }
     }
 }
