@@ -2,13 +2,13 @@
 
 namespace KT;
 
-use anlutro;
+use anlutro\cURL;
 
-class Curl extends anlutro\cURL\cURL
+class Curl extends cURL
 {
 	function __construct()
 	{
-		return new anlutro\cURL\cURL;
+		return new cURL;
 	}	
 }
 

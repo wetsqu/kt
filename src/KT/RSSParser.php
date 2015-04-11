@@ -8,7 +8,7 @@ class RSSParser extends anlutro\cURL\cURL
 {
 	function __construct()
 	{
-		return Reader;
+		return new Reader;
 	}	
 }
 
