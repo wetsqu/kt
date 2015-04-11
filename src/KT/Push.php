@@ -4,7 +4,7 @@ namespace KT;
 
 use anlutro;
 
-class PushMessage
+class Push
 {
 	private $host = '';
 	
