@@ -2,6 +2,8 @@
 
 namespace KT;
 
+use SimpleXMLElement;
+
 class KTClosure {
 
   var $_srcs = array();

@@ -2,6 +2,9 @@
 
 namespace KT;
 
+use Request;
+use Storage;
+
 class KTMinify
 {
 	function __construct()
