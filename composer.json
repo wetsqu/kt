@@ -9,10 +9,7 @@
 		"matthiasmullie/minify": "*",
 		"fguillot/picoFeed": "*",
 		"anlutro/curl": "0.*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "4.*"		
-    },
+    },    
     "autoload": {
         "psr-0": {
             "KT": "src/"
