@@ -2,7 +2,7 @@
 
 namespace KT;
 
-class XMLParser 
+class KTXML
 {
     /**
      * The XML parser

@@ -4,7 +4,7 @@ namespace KT;
 
 use PicoFeed\Reader\Reader;
 
-class RSSParser extends anlutro\cURL\cURL
+class KTRSS extends anlutro\cURL\cURL
 {
 	function __construct()
 	{

@@ -1,6 +1,5 @@
 # laravel
 
-@all
+composer require anlutro/curl:0.* matthiasmullie/minify:* fguillot/picoFeed:* wetsqu/kt:dev-master
 
-composer require wetsqu/kt:* anlutro/curl:0.* matthiasmullie/minify:* fguillot/picoFeed:*
 
