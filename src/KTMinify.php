@@ -4,6 +4,7 @@ namespace KT;
 
 use Request;
 use Storage;
+use MatthiasMullie\Minify;
 
 class KTMinify
 {
@@ -14,7 +15,7 @@ class KTMinify
 	static function js($files, $cached = false)
 	{	
 		$minify = new KTMinify();		
-		$content = $minify->build($files, 'js');
+		$content = $minify->build_js($files);
 		
 		$accept_encoding_gzip = strpos(Request::capture()->header('Accept-Encoding'), 'gzip') !== false;
 		if ($accept_encoding_gzip) $content = gzencode($content, 5);
@@ -38,7 +39,7 @@ class KTMinify
 	static function css($files, $cached = false)
 	{	
 		$minify = new KTMinify();		
-		$content = $minify->build($files, 'css');
+		$content = $minify->build_css($files);
 		
 		$accept_encoding_gzip = strpos(Request::capture()->header('Accept-Encoding'), 'gzip') !== false;
 		if ($accept_encoding_gzip) $content = gzencode($content, 5);
@@ -59,7 +60,7 @@ class KTMinify
 		return $response;
 	}
 	
-	private function build($files, $dir)
+	private function build_js($files)
 	{	
 		if (count($files) > 0)
 		{
@@ -88,16 +89,66 @@ class KTMinify
 				$etag = md5($etag);				
 				$filename = str_replace('.', "_", $filename);
 				
-				if (Storage::exists('ktminify/' . $dir . '/' . $filename . '-' . $etag))
+				if (Storage::exists('ktminify/js/' . $filename . '-' . $etag))
 				{
-					return Storage::get('ktminify/' . $dir . '/' . $filename . '-' . $etag);
+					return Storage::get('ktminify/js/' . $filename . '-' . $etag);
 				}
 				else
 				{				
 					$content = $closure->compile();
 					$content = pack("CCC",0xef,0xbb,0xbf) . $content;
 					
-					Storage::put('ktminify/' . $dir . '/' . $filename . '-' . $etag, $content);
+					Storage::put('ktminify/js/' . $filename . '-' . $etag, $content);
+					return $content;
+				}
+			}
+			else
+			{
+				return $content;
+			}	
+		}
+		
+		return '';
+	}
+	
+	private function build_css($files)
+	{
+		if (count($files) > 0)
+		{
+			$minifier = new Minify\CSS();
+			$etag = '';
+			$content = '';
+			$filename = '';
+			
+			foreach ($files as $file)
+			{
+				if (env('MINIFY', false))
+				{
+					$minifier->add($file);
+					$filename .= (strlen($filename) > 0 ? '-' : '') . basename($file);
+					$etag .= md5(filemtime($file));
+				}
+				else
+				{
+					$content .= file_get_contents($file) . ' ';
+				}
+			}
+			
+			if (env('MINIFY', false))
+			{
+				$etag = md5($etag);
+				$filename = str_replace('.', "_", $filename);
+				
+				if (Storage::exists('ktminify/css/' . $filename . '-' . $etag))
+				{
+					return Storage::get('ktminify/css/' . $filename . '-' . $etag);
+				}
+				else
+				{
+					$content = $minifier->minify();
+					$content = pack("CCC",0xef,0xbb,0xbf) . $content;
+					
+					Storage::put('ktminify/css/' . $filename . '-' . $etag, $content);				
 					return $content;
 				}
 			}
