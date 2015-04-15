@@ -3,13 +3,10 @@
 namespace KT;
 
 use PicoFeed\Reader\Reader;
+use PicoFeed\PicoFeedException;
 
-class KTRSS extends anlutro\cURL\cURL
+class KTRSS extends \PicoFeed\Reader\Reader
 {
-	function __construct()
-	{
-		return new Reader;
-	}	
 }
 
 ?>
