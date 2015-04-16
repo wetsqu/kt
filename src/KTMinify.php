@@ -15,25 +15,27 @@ class KTMinify
 	static function js($files, $cached = false)
 	{	
 		$minify = new KTMinify();		
-		$content = $minify->build_js($files);
+		$data = $minify->build_js($files);
 		
 		$accept_encoding_gzip = strpos(Request::capture()->header('Accept-Encoding'), 'gzip') !== false;
-		if ($accept_encoding_gzip) $content = gzencode($content, 5);
+		if ($accept_encoding_gzip) $data['content'] = gzencode($data['content'], 5);
 		
-		$response = response($content, 200)->header('Content-Type', 'application/javascript');
+		$data['response'] = response($data['content'], 200)->header('Content-Type', 'application/javascript');
 		
 		if ($cached)
 		{
 			$datetime_current = date('r', time());
 			$datetime_expires = date('r', time() + 3600 * 24 * 7);
 		
-			$response->setLastModified(new \DateTime($datetime_current))
-				     ->setExpires(new \DateTime($datetime_expires))
-				     ->setPublic();
+			$data['response']->setLastModified(new \DateTime($datetime_current))
+				             ->setExpires(new \DateTime($datetime_expires))
+				             ->setPublic();
 		}
 		
-		if ($accept_encoding_gzip) $response->header('Content-Encoding', 'gzip');
-		return $response;
+		if ($accept_encoding_gzip) $data['response']->header('Content-Encoding', 'gzip');
+		
+		return $data;
+		//return $response;
 	}
 	
 	static function css($files, $cached = false)
@@ -81,17 +83,20 @@ class KTMinify
 				else
 				{
 					$content .= file_get_contents($file) . ' ';
+					$etag .= md5(filemtime($file));
 				}
 			}
 			
+			$etag = md5($etag);
+			
 			if (env('MINIFY', false))
 			{
-				$etag = md5($etag);				
+								
 				$filename = str_replace('.', "_", $filename);
 				
 				if (Storage::exists('ktminify/js/' . $filename . '-' . $etag))
 				{
-					return Storage::get('ktminify/js/' . $filename . '-' . $etag);
+					return array('content' => Storage::get('ktminify/js/' . $filename . '-' . $etag), 'etag' => $etag);
 				}
 				else
 				{				
@@ -99,13 +104,13 @@ class KTMinify
 					$content = pack("CCC",0xef,0xbb,0xbf) . $content;
 					
 					Storage::put('ktminify/js/' . $filename . '-' . $etag, $content);
-					return $content;
+					return array('content' => $content, 'etag' => $etag);
 				}
 			}
 			else
 			{
-				return $content;
-			}	
+				return array('content' => $content, 'etag' => $etag);
+			}
 		}
 		
 		return '';
