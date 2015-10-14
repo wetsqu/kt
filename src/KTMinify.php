@@ -40,25 +40,25 @@ class KTMinify
 	static function css($files, $cached = false)
 	{	
 		$minify = new KTMinify();		
-		$content = $minify->build_css($files);
+		$data = $minify->build_css($files);
 		
 		$accept_encoding_gzip = strpos(Request::capture()->header('Accept-Encoding'), 'gzip') !== false;
-		if ($accept_encoding_gzip) $content = gzencode($content, 5);
+		if ($accept_encoding_gzip) $data['content'] = gzencode($data['content'], 5);
 		
-		$response = response($content, 200)->header('Content-Type', 'text/css');
+		$data['response'] = response($content, 200)->header('Content-Type', 'text/css');
 		
 		if ($cached)
 		{
 			$datetime_current = date('r', time());
 			$datetime_expires = date('r', time() + 3600 * 24 * 7);
 		
-			$response->setLastModified(new \DateTime($datetime_current))
-				     ->setExpires(new \DateTime($datetime_expires))
-				     ->setPublic();
+			$data['response']->setLastModified(new \DateTime($datetime_current))
+				             ->setExpires(new \DateTime($datetime_expires))
+				             ->setPublic();
 		}
 		
-		if ($accept_encoding_gzip) $response->header('Content-Encoding', 'gzip');
-		return $response;
+		if ($accept_encoding_gzip) $data['response']->header('Content-Encoding', 'gzip');
+		return $data;
 	}
 	
 	private function build_js($files)
