@@ -143,12 +143,12 @@ class KTMinify
 			
 			if (env('MINIFY', false))
 			{
-				$etag = md5($etag);
 				$filename = str_replace('.', "_", $filename);
 				
 				if (Storage::exists('ktminify/css/' . $filename . '-' . $etag))
 				{
-					return Storage::get('ktminify/css/' . $filename . '-' . $etag);
+					return array('content' => Storage::get('ktminify/css/' . $filename . '-' . $etag), 'etag' => $etag);
+					// return Storage::get('ktminify/css/' . $filename . '-' . $etag);
 				}
 				else
 				{
@@ -156,7 +156,8 @@ class KTMinify
 					$content = pack("CCC",0xef,0xbb,0xbf) . $content;
 					
 					Storage::put('ktminify/css/' . $filename . '-' . $etag, $content);				
-					return $content;
+					return array('content' => $content, 'etag' => $etag);
+					//return $content;
 				}
 			}
 			else
