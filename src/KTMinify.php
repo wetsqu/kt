@@ -45,7 +45,7 @@ class KTMinify
 		$accept_encoding_gzip = strpos(Request::capture()->header('Accept-Encoding'), 'gzip') !== false;
 		if ($accept_encoding_gzip) $data['content'] = gzencode($data['content'], 5);
 		
-		$data['response'] = response($content, 200)->header('Content-Type', 'text/css');
+		$data['response'] = response($data['content'], 200)->header('Content-Type', 'text/css');
 		
 		if ($cached)
 		{
