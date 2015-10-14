@@ -35,7 +35,6 @@ class KTMinify
 		if ($accept_encoding_gzip) $data['response']->header('Content-Encoding', 'gzip');
 		
 		return $data;
-		//return $response;
 	}
 	
 	static function css($files, $cached = false)
@@ -136,8 +135,11 @@ class KTMinify
 				else
 				{
 					$content .= file_get_contents($file) . ' ';
+					$etag .= md5(filemtime($file));
 				}
 			}
+			
+			$etag = md5($etag);
 			
 			if (env('MINIFY', false))
 			{
@@ -159,7 +161,8 @@ class KTMinify
 			}
 			else
 			{
-				return $content;
+				return array('content' => $content, 'etag' => $etag);
+				//return $content;
 			}	
 		}
 		
