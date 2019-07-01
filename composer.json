@@ -6,8 +6,7 @@
     "license": "MIT",	
     "require": {
         "php": ">=5.3.0",
-		"matthiasmullie/minify": "*",
-		"fguillot/picoFeed": "0.1.3"
+		"matthiasmullie/minify": "*"
     },    
     "autoload": {
         "psr-4": {
